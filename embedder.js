@@ -1,17 +1,27 @@
 var fs = require('fs');
 var path = require('path');
 
+function existsSync(path) {
+    try {
+        return fs.statSync(path);
+    } catch (err) {
+        if (err.code === "ENOENT") return false;
+        throw err;
+    }
+}
+
 // Node style package resolving so that plugins' package.json can be found relative to the config file
 // It's not the full node require system algorithm, but it's the 99% case
 function resolvePackage(base, packagePath) {
+    var newPath;
     if (packagePath[0] === "." || packagePath[0] === "/") {
-        var newPath = path.resolve(base, packagePath, "package.json");
-        if (path.existsSync(newPath)) return newPath;
+        newPath = path.resolve(base, packagePath, "package.json");
+        if (existsSync(newPath)) return newPath;
     }
     else {
         while (base) {
-            var newPath = path.resolve(base, "node_modules", packagePath, "package.json");
-            if (path.existsSync(newPath)) return newPath;
+            newPath = path.resolve(base, "node_modules", packagePath, "package.json");
+            if (existsSync(newPath)) return newPath;
             base = base.substr(0, base.lastIndexOf("/"));
         }
     }
@@ -29,8 +39,9 @@ function embedder(base, modules, minify) {
     for (var i = 0, l = modules.length; i < l; i++) {
       var module = modules[i];
       var pos = module.indexOf("/");
+      var local;
       if (pos > 0) {
-        var local = module.substr(pos);
+        local = module.substr(pos);
         module = module.substr(0, pos);
       }
       var packagePath = resolvePackage(base, module);
@@ -40,7 +51,7 @@ function embedder(base, modules, minify) {
       if (local) {
         var localPath = path.join(newBase, local + ".js");
 
-        if (!path.existsSync(localPath)) throw new Error("Missing file " + localPath);
+        if (!existsSync(localPath)) throw new Error("Missing file " + localPath);
         files[module + local] = localPath;
         continue;
       }
@@ -72,5 +83,5 @@ function embedder(base, modules, minify) {
   ast = pro.ast_mangle(ast); // get a new AST with mangled names
   ast = pro.ast_squeeze(ast); // get an AST with compression optimizations
   return pro.gen_code(ast); // compressed code here
-  
+
 }

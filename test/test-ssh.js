@@ -4,7 +4,7 @@ console.log(Master);
 
 var master = new Master({
   root: "/home/tim/",
-  host: "creationix.com",
+  host: "tim@creationix.com",
   nodePath: "/home/tim/nvm/v0.8.4/bin/node"
 });
 

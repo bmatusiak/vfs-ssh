@@ -26,16 +26,17 @@ function Master(fsOptions) {
     // Configure the ssh command-line options
     var args = [host];
     args.push("-F", "/dev/null"); // use empty config file to not depend on local settings
-    
+
     var sshOptions = { BatchMode: "yes" };
     // see `man ssh_config` to see what options are avaialble
     // Mix in user specified options overrides
+    var key;
     if (fsOptions.sshOptions) {
-        for (var key in fsOptions.sshOptions) {
+        for (key in fsOptions.sshOptions) {
             sshOptions[key] = fsOptions.sshOptions[key];
         }
     }
-    for (var key in sshOptions) {
+    for (key in sshOptions) {
         args.push("-o", key + "=" + sshOptions[key]);
     }
     args.push(nodePath + " -e '" + bootstrap + "'");

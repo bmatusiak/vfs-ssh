@@ -1,7 +1,4 @@
 module.exports = function (config, callback) {
-    // explicitly set uid/gid so localfs does not complain if we run as root
-    config.uid = process.getuid();
-    config.gid = process.getgid();
 
     var Worker = require('vfs-socket/worker').Worker;
     var vfsLocal = require('vfs-local')(config);

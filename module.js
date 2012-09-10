@@ -1,4 +1,4 @@
-// Super simple require system 
+// Super simple require system
 (function () {
 
 // Store our repository in private variables in this closure.
@@ -8,7 +8,7 @@ var defs = {},
 // When the user defines a module's setup function, store it here.
 define = function define(name, fn) {
   defs[name] = fn;
-}
+};
 
 var realRequire = typeof require !== "undefined" && require;
 // The first time a module is used, it's description is executed and cached.
@@ -25,6 +25,6 @@ require = function require(name) {
     return realRequire(name);
   }
   throw new Error("Can't find module " + name);
-}
+};
 
 }());
