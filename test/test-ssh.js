@@ -8,7 +8,12 @@ var master = new Master({
   nodePath: "/home/tim/nvm/v0.8.4/bin/node"
 });
 
+console.log("connecting...");
 master.connect(function (err, vfs) {
   if (err) throw err;
-  console.log(vfs);
+  console.log("Connected", vfs);
+  setTimeout(function () {
+    console.log("disconnecting...");
+    master.disconnect();
+  }, 1000);
 });
