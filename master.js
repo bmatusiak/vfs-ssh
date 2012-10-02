@@ -1,5 +1,6 @@
 var spawn = require('child_process').spawn;
 var Consumer = require('vfs-socket/consumer').Consumer;
+var Transport = require('vfs-socket/consumer').smith.Transport;
 var inherits = require('util').inherits;
 var embedderSync = require('./embedder');
 
@@ -36,6 +37,7 @@ function Master(fsOptions) {
             sshOptions[key] = fsOptions.sshOptions[key];
         }
     }
+    delete fsOptions.sshOptions;
     for (key in sshOptions) {
         args.push("-o", key + "=" + sshOptions[key]);
     }
@@ -95,7 +97,7 @@ function Master(fsOptions) {
         }
         this.once("connect", reset);
 
-        Consumer.prototype.connect.call(this, [child.stdout, child.stdin], callback);
+        Consumer.prototype.connect.call(this, new Transport([child.stdout, child.stdin], fsOptions.debug), callback);
     }
 
     this.disconnect = disconnect.bind(this);
