@@ -7,7 +7,6 @@
         "type": "git",
         "url": "git://github.com/c9/vfs-ssh.git"
     },
-    "private": true,
     "main": "master.js",
     "dependencies": {
         "vfs-socket": "~0.3.2",
