@@ -51,7 +51,7 @@ function Master(fsOptions) {
                 customFds: [-1, -1, 2]
             });
         } catch (e) {
-            callback(new Error("Could not spawn ssh client: " + e.toString()));
+            return callback(new Error("Could not spawn ssh client: " + e.toString()));
         }
 
         var code = libCode + "\nrequire('vfs-ssh/slave')(" + JSON.stringify(fsOptions) + ");\n";
