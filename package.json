@@ -2,14 +2,14 @@
     "author": "Tim Caswell <tim@c9.io>",
     "name": "vfs-ssh",
     "description": "A ssh based implementation that provides a virtual filesystem by using a remote node process tunneled over ssh.",
-    "version": "0.3.4",
+    "version": "0.3.5",
     "repository": {
         "type": "git",
         "url": "git://github.com/c9/vfs-ssh.git"
     },
     "main": "master.js",
     "dependencies": {
-        "vfs-socket": "~0.3.2",
+        "vfs-socket": "~0.3.6",
         "vfs-local": "~0.3.4",
         "uglify-js": "~1.3.3"
     }
