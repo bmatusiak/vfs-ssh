@@ -12,5 +12,8 @@
         "vfs-socket": "~0.3.6",
         "vfs-local": "~0.3.4",
         "uglify-js": "~1.3.3"
-    }
+    },
+    "licenses" : [{
+        "type" : "MIT"
+    }]
 }
